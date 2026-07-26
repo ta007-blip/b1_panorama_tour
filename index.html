@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B1F 360° Panorama Tour</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.7/build/pannellum.css">
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.7/build/pannellum.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #111;
+      font-family: Arial, "Helvetica Neue", sans-serif;
+    }
+    #panorama { width: 100%; height: 100%; }
+
+    .scene-menu {
+      position: fixed;
+      z-index: 20;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      max-width: calc(100vw - 24px);
+      padding: 8px;
+      overflow-x: auto;
+      background: rgba(0, 0, 0, 0.66);
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+    }
+    .scene-button {
+      flex: 0 0 auto;
+      min-width: 120px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: 7px;
+      background: rgba(30,30,30,.86);
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .scene-button:hover,
+    .scene-button.active {
+      background: #fff;
+      color: #111;
+    }
+
+    .floorplan-panel {
+      position: fixed;
+      z-index: 30;
+      top: 18px;
+      right: 18px;
+      width: clamp(220px, 24vw, 300px);
+      padding: 8px;
+      background: rgba(255,255,255,.94);
+      border-radius: 10px;
+      box-shadow: 0 3px 18px rgba(0,0,0,.38);
+    }
+    .floorplan-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 0 2px 7px;
+    }
+    .floorplan-title {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: #111;
+    }
+    .floorplan-current {
+      margin: 0;
+      font-size: 10px;
+      color: #444;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+    .floorplan-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 885 / 745;
+      overflow: hidden;
+      border: 1px solid #d0d0d0;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .floorplan-wrap img {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+
+    .plan-marker {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      transform: translate(-50%, -50%);
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      z-index: 3;
+    }
+    .plan-marker::before {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+    }
+    .plan-marker:hover::before {
+      border-color: rgba(255, 212, 0, .75);
+    }
+    .plan-marker.active::before {
+      border: 3px solid #ffd400;
+      background: rgba(255, 212, 0, .12);
+      box-shadow:
+        0 0 0 3px rgba(255,212,0,.30),
+        0 2px 7px rgba(0,0,0,.45);
+      transform: scale(1.22);
+    }
+
+    @media (max-width: 800px) {
+      .floorplan-panel {
+        top: 10px;
+        right: 10px;
+        width: clamp(180px, 42vw, 240px);
+        padding: 7px;
+      }
+      .scene-button {
+        min-width: 110px;
+        padding: 9px 11px;
+        font-size: 13px;
+      }
+      .plan-marker {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="panorama"></div>
+
+  <aside class="floorplan-panel" aria-label="B1F撮影位置平面図">
+    <div class="floorplan-header">
+      <p class="floorplan-title">B1F 撮影位置</p>
+      <p class="floorplan-current" id="floorplanCurrent">2.JPG</p>
+    </div>
+
+    <div class="floorplan-wrap">
+      <img src="floorplan_B1F.jpg" alt="B1F平面図">
+      <button
+        class="plan-marker active"
+        data-scene="scene2"
+        style="left: 16.384181%;
+               top: 23.624161%;"
+        aria-label="2.JPGを表示">
+      </button>
+      <button
+        class="plan-marker"
+        data-scene="scene17"
+        style="left: 40.112994%;
+               top: 23.758389%;"
+        aria-label="17.JPGを表示">
+      </button>
+      <button
+        class="plan-marker"
+        data-scene="scene184"
+        style="left: 45.423729%;
+               top: 78.791946%;"
+        aria-label="184.JPGを表示">
+      </button>
+      <button
+        class="plan-marker"
+        data-scene="scene185_227"
+        style="left: 51.638418%;
+               top: 73.154362%;"
+        aria-label="185_227.JPGを表示">
+      </button>
+      <button
+        class="plan-marker"
+        data-scene="scene209"
+        style="left: 45.197740%;
+               top: 84.026846%;"
+        aria-label="209.JPGを表示">
+      </button>
+      <button
+        class="plan-marker"
+        data-scene="scene210"
+        style="left: 51.977401%;
+               top: 78.926174%;"
+        aria-label="210.JPGを表示">
+      </button>
+    </div>
+  </aside>
+
+  <nav class="scene-menu" aria-label="パノラマ切替">
+    <button class="scene-button active" data-scene="scene2">
+      2.JPG
+    </button>
+    <button class="scene-button" data-scene="scene17">
+      17.JPG
+    </button>
+    <button class="scene-button" data-scene="scene184">
+      184.JPG
+    </button>
+    <button class="scene-button" data-scene="scene185_227">
+      185_227.JPG
+    </button>
+    <button class="scene-button" data-scene="scene209">
+      209.JPG
+    </button>
+    <button class="scene-button" data-scene="scene210">
+      210.JPG
+    </button>
+  </nav>
+
+  <script>
+    const sceneNames = {
+      scene2: "2.JPG",
+      scene17: "17.JPG",
+      scene184: "184.JPG",
+      scene185_227: "185_227.JPG",
+      scene209: "209.JPG",
+      scene210: "210.JPG"
+    };
+
+    const viewer = pannellum.viewer("panorama", {
+      default: {
+        firstScene: "scene2",
+        autoLoad: true,
+        sceneFadeDuration: 700,
+        showControls: true,
+        showFullscreenCtrl: true,
+        compass: false
+      },
+
+      scenes: {
+        scene2: {
+          title: "2.JPG",
+          type: "equirectangular",
+          panorama: "2.JPG",
+          yaw: 0,
+          pitch: 0,
+          hfov: 100
+        },
+
+        scene17: {
+          title: "17.JPG",
+          type: "equirectangular",
+          panorama: "17.JPG",
+          yaw: 0,
+          pitch: 0,
+          hfov: 100
+        },
+
+        scene184: {
+          title: "184.JPG",
+          type: "equirectangular",
+          panorama: "184.JPG",
+          yaw: 0,
+          pitch: 0,
+          hfov: 100
+        },
+
+        scene185_227: {
+          title: "185_227.JPG",
+          type: "equirectangular",
+          panorama: "185_227.JPG",
+          yaw: 0,
+          pitch: 0,
+          hfov: 100
+        },
+
+        scene209: {
+          title: "209.JPG",
+          type: "equirectangular",
+          panorama: "209.JPG",
+          yaw: 0,
+          pitch: 0,
+          hfov: 100
+        },
+
+        scene210: {
+          title: "210.JPG",
+          type: "equirectangular",
+          panorama: "210.JPG",
+          yaw: 0,
+          pitch: 0,
+          hfov: 100
+        }
+      }
+    });
+
+    const sceneButtons = document.querySelectorAll(".scene-button");
+    const planMarkers = document.querySelectorAll(".plan-marker");
+    const floorplanCurrent = document.getElementById("floorplanCurrent");
+
+    function loadScene(sceneId) {
+      if (viewer.getScene() !== sceneId) {
+        viewer.loadScene(sceneId);
+      }
+    }
+
+    sceneButtons.forEach((button) => {
+      button.addEventListener("click", () => loadScene(button.dataset.scene));
+    });
+
+    planMarkers.forEach((marker) => {
+      marker.addEventListener("click", () => loadScene(marker.dataset.scene));
+    });
+
+    viewer.on("scenechange", (sceneId) => {
+      sceneButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.scene === sceneId);
+      });
+      planMarkers.forEach((marker) => {
+        marker.classList.toggle("active", marker.dataset.scene === sceneId);
+      });
+      floorplanCurrent.textContent = sceneNames[sceneId] || "";
+    });
+  </script>
+</body>
+</html>
