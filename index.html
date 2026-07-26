@@ -31,11 +31,13 @@
     }
 
     .scene-menu {
+      --menu-scale: 0.8;
       position: fixed;
       z-index: 20;
       left: 50%;
       bottom: 18px;
-      transform: translateX(-50%);
+      transform: translateX(-50%) scale(0.8);
+      transform-origin: bottom center;
       display: flex;
       gap: 8px;
       max-width: calc(100vw - 24px);
@@ -49,13 +51,13 @@
 
     .scene-button {
       flex: 0 0 auto;
-      min-width: 72px;
-      padding: 6px 8px;
+      min-width: 90px;
+      padding: 8px 10px;
       border: 1px solid rgba(255,255,255,.65);
       border-radius: 7px;
       background: rgba(30,30,30,.86);
       color: #fff;
-      font-size: 10px;
+      font-size: 12px;
       cursor: pointer;
       white-space: nowrap;
     }
@@ -88,7 +90,7 @@
 
     .floorplan-title {
       margin: 0;
-      font-size: 9px;
+      font-size: 11px;
       font-weight: 700;
       color: #111;
     }
@@ -169,8 +171,8 @@
       }
 
       .scene-button {
-        min-width: 67px;
-        padding: 6px 7px;
+        min-width: 84px;
+        padding: 7px 9px;
         font-size: 11px;
       }
 
@@ -186,8 +188,8 @@
       }
 
       .scene-button {
-        min-width: 66px;
-        font-size: 9px;
+        min-width: 82px;
+        font-size: 11px;
       }
     }
   </style>
