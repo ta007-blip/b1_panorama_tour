@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1F 360° Panorama Tour</title>
+  <title>B1F 360° Panorama Tour</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.7/build/pannellum.css">
   <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.7/build/pannellum.js"></script>
@@ -195,82 +195,93 @@
 <body>
   <div id="panorama"></div>
 
-  <aside class="floorplan-panel" aria-label="1F撮影位置平面図">
+  <aside class="floorplan-panel" aria-label="B1F撮影位置平面図">
     <div class="floorplan-header">
-      <p class="floorplan-title">1F 撮影位置</p>
-      <p class="floorplan-current" id="floorplanCurrent">207_123.JPG</p>
+      <p class="floorplan-title">B1F 撮影位置</p>
+      <p class="floorplan-current" id="floorplanCurrent">17.JPG</p>
     </div>
 
     <div class="floorplan-wrap">
-      <img src="floorplan_1F.jpg" alt="1F平面図">
+      <img src="floorplan_B1F.jpg" alt="B1F平面図">
       <button
         class="plan-marker"
-        data-scene="scene11_12_14"
-        style="left: 20.225989%;
-               top: 31.677852%;"
-        aria-label="11_12_14.JPGを表示">
-      </button>
-      <button
-        class="plan-marker"
-        data-scene="scene70"
-        style="left: 34.463277%;
-               top: 61.744966%;"
-        aria-label="70.JPGを表示">
-      </button>
-      <button
-        class="plan-marker"
-        data-scene="scene83"
-        style="left: 37.288136%;
-               top: 65.771812%;"
-        aria-label="83.JPGを表示">
-      </button>
-      <button
-        class="plan-marker"
-        data-scene="scene90"
-        style="left: 43.841808%;
-               top: 70.738255%;"
-        aria-label="90.JPGを表示">
+        data-scene="scene2"
+        style="left: 16.384181%;
+               top: 23.624161%;"
+        aria-label="2.JPGを表示">
       </button>
       <button
         class="plan-marker active"
-        data-scene="scene207_123"
-        style="left: 50.056497%;
-               top: 49.261745%;"
-        aria-label="207_123.JPGを表示">
+        data-scene="scene17"
+        style="left: 40.112994%;
+               top: 23.758389%;"
+        aria-label="17.JPGを表示">
+      </button>
+      <button
+        class="plan-marker"
+        data-scene="scene184"
+        style="left: 45.423729%;
+               top: 78.791946%;"
+        aria-label="184.JPGを表示">
+      </button>
+      <button
+        class="plan-marker"
+        data-scene="scene185_227"
+        style="left: 51.638418%;
+               top: 73.154362%;"
+        aria-label="185_227.JPGを表示">
+      </button>
+      <button
+        class="plan-marker"
+        data-scene="scene209"
+        style="left: 45.197740%;
+               top: 84.026846%;"
+        aria-label="209.JPGを表示">
+      </button>
+      <button
+        class="plan-marker"
+        data-scene="scene210"
+        style="left: 51.977401%;
+               top: 78.926174%;"
+        aria-label="210.JPGを表示">
       </button>
     </div>
   </aside>
 
   <nav class="scene-menu" aria-label="パノラマ切替">
-    <button class="scene-button" data-scene="scene11_12_14">
-      11_12_14.JPG
+    <button class="scene-button" data-scene="scene2">
+      2.JPG
     </button>
-    <button class="scene-button" data-scene="scene70">
-      70.JPG
+    <button class="scene-button active" data-scene="scene17">
+      17.JPG
     </button>
-    <button class="scene-button" data-scene="scene83">
-      83.JPG
+    <button class="scene-button" data-scene="scene184">
+      184.JPG
     </button>
-    <button class="scene-button" data-scene="scene90">
-      90.JPG
+    <button class="scene-button" data-scene="scene185_227">
+      185_227.JPG
     </button>
-    <button class="scene-button active" data-scene="scene207_123">
-      207_123.JPG
+    <button class="scene-button" data-scene="scene209">
+      209.JPG
+    </button>
+    <button class="scene-button" data-scene="scene210">
+      210.JPG
     </button>
   </nav>
 
   <script>
     const sceneNames = {
-      scene11_12_14: "11_12_14.JPG",
-      scene70: "70.JPG",
-      scene83: "83.JPG",
-      scene90: "90.JPG",
-      scene207_123: "207_123.JPG"
+      scene2: "2.JPG",
+      scene17: "17.JPG",
+      scene184: "184.JPG",
+      scene185_227: "185_227.JPG",
+      scene209: "209.JPG",
+      scene210: "210.JPG"
     };
 
     const viewer = pannellum.viewer("panorama", {
       default: {
-        firstScene: "scene207_123",
+        firstScene: "scene17",
         autoLoad: true,
         sceneFadeDuration: 700,
         showControls: true,
@@ -279,46 +290,55 @@
       },
 
       scenes: {
-        scene11_12_14: {
-          title: "11_12_14.JPG",
+        scene2: {
+          title: "2.JPG",
           type: "equirectangular",
-          panorama: "11_12_14.JPG",
+          panorama: "2.JPG",
           yaw: 0,
           pitch: 0,
           hfov: 100
         },
 
-        scene70: {
-          title: "70.JPG",
+        scene17: {
+          title: "17.JPG",
           type: "equirectangular",
-          panorama: "70.JPG",
+          panorama: "17.JPG",
           yaw: 0,
           pitch: 0,
           hfov: 100
         },
 
-        scene83: {
-          title: "83.JPG",
+        scene184: {
+          title: "184.JPG",
           type: "equirectangular",
-          panorama: "83.JPG",
+          panorama: "184.JPG",
           yaw: 0,
           pitch: 0,
           hfov: 100
         },
 
-        scene90: {
-          title: "90.JPG",
+        scene185_227: {
+          title: "185_227.JPG",
           type: "equirectangular",
-          panorama: "90.JPG",
+          panorama: "185_227.JPG",
           yaw: 0,
           pitch: 0,
           hfov: 100
         },
 
-        scene207_123: {
-          title: "207_123.JPG",
+        scene209: {
+          title: "209.JPG",
           type: "equirectangular",
-          panorama: "207_123.JPG",
+          panorama: "209.JPG",
+          yaw: 0,
+          pitch: 0,
+          hfov: 100
+        },
+
+        scene210: {
+          title: "210.JPG",
+          type: "equirectangular",
+          panorama: "210.JPG",
           yaw: 0,
           pitch: 0,
           hfov: 100
