@@ -37,13 +37,13 @@
     }
     .scene-button {
       flex: 0 0 auto;
-      min-width: 120px;
-      padding: 10px 14px;
+      min-width: 90px;
+      padding: 8px 10px;
       border: 1px solid rgba(255,255,255,.65);
       border-radius: 7px;
       background: rgba(30,30,30,.86);
       color: #fff;
-      font-size: 14px;
+      font-size: 12px;
       cursor: pointer;
       white-space: nowrap;
     }
@@ -58,7 +58,7 @@
       z-index: 30;
       top: 18px;
       right: 18px;
-      width: clamp(220px, 24vw, 300px);
+      width: clamp(180px, 16vw, 230px);
       padding: 8px;
       background: rgba(255,255,255,.94);
       border-radius: 10px;
@@ -73,13 +73,13 @@
     }
     .floorplan-title {
       margin: 0;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 700;
       color: #111;
     }
     .floorplan-current {
       margin: 0;
-      font-size: 10px;
+      font-size: 9px;
       color: #444;
       text-align: right;
       overflow-wrap: anywhere;
@@ -142,19 +142,40 @@
       .floorplan-panel {
         top: 10px;
         right: 10px;
-        width: clamp(180px, 42vw, 240px);
+        width: clamp(160px, 24vw, 210px);
         padding: 7px;
       }
       .scene-button {
-        min-width: 110px;
-        padding: 9px 11px;
-        font-size: 13px;
+        min-width: 84px;
+        padding: 7px 9px;
+        font-size: 11px;
       }
       .plan-marker {
         width: 18px;
         height: 18px;
       }
     }
+    .floorplan-wrap {
+      max-height: 34vh;
+    }
+    .floorplan-wrap img {
+      max-height: 34vh;
+    }
+    .scene-menu {
+      max-height: 56px;
+    }
+
+    @media (min-aspect-ratio: 4/3) {
+      .floorplan-panel {
+        width: clamp(170px, 14vw, 210px);
+      }
+      .scene-button {
+        min-width: 82px;
+        font-size: 11px;
+      }
+    }
+
+
   </style>
 </head>
 <body>
